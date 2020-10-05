@@ -22,4 +22,4 @@ def borrow(amount):
     interest = (np.sum(cost_borrowing))/x
     returna = "the total cost of borrwing will be {}".format(np.sum(cost_borrowing))
     returnb = "the total interest will be {}".format(interest)
-    return returna, returnb
+    print(returna, returnb)
