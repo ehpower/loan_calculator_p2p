@@ -33,14 +33,15 @@ def borrow(amount, update = True):
                 number_borrowers +=1
             i = i+1
 
-        requested = requested_amount
-        interest = ponderated_rate/initial_amount
-        total_interest = requested+(requested*(interest*(((1+interest)**36))/(((1+interest)**36)-1)))
-        compound = 1 + interest
+        rate = ponderated_rate/initial_amount
+        interest_per_period = rate/12
+        denominador = ((1 + interest_per_period)**36)-1
+        payment_per_month = requested_amount*((interest_per_period*(1 + interest_per_period)**36)/denominador)
+        total_payment = payment_per_month*36
         returna = "Requested Amount : {}".format(requested_amount)
-        returnb = "Rate:  {:.1f}%".format(interest*100)
-        returnc = "Monthly Repaiments: {:.2f}".format(((requested*(interest*(((1+interest)**36)))/(((1+interest)**36)-1))))
-        returnd = "Total Repaiments: {}".format((requested+(requested*(interest*(((1+interest)**36))/(((1+interest)**36)-1)))))
+        returnb = "Rate:  {:.1f}%".format(rate*100)
+        returnc = "Monthly Repaiments: {:.2f}".format(payment_per_month)
+        returnd = "Total Repaiments: {}".format(total_payment)
 
         print(returna)
         print(returnb)
@@ -68,19 +69,19 @@ def borrow(amount, update = True):
                 dflender["Available"][i] = dflender["Available"][i] - to_subtract
             i = i+1
 
-        requested = requested_amount
-        interest = ponderated_rate/initial_amount
-        total_interest = requested+(requested*(interest*(((1+interest)**36))/(((1+interest)**36)-1)))
-        compound = 1 + interest
-        dflender.dropna(inplace = True)
+        rate = ponderated_rate/initial_amount
+        interest_per_period = rate/12
+        denominador = ((1 + interest_per_period)**36)-1
+        payment_per_month = requested_amount*((interest_per_period*(1 + interest_per_period)**36)/denominador)
+        total_payment = payment_per_month*36
         returna = "Requested Amount : {}".format(requested_amount)
-        returnb = "Rate:  {:.1f}%".format(interest*100)
-        returnc = "Monthly Repaiments: {:.2f}".format(((requested*(interest*(((1+interest)**36)))/(((1+interest)**36)-1))))
-        returnd = "Total Repaiments: {}".format((requested+(requested*(interest*(((1+interest)**36))/(((1+interest)**36)-1)))))
+        returnb = "Rate:  {:.1f}%".format(rate*100)
+        returnc = "Monthly Repaiments: {:.2f}".format(payment_per_month)
+        returnd = "Total Repaiments: {}".format(total_payment)
+        dflender.dropna(inplace = True)
         dflender.to_csv("../DATA/market_ex.csv")
         print(returna)
         print(returnb)
         print(returnc)
         print(returnd)
-
         
